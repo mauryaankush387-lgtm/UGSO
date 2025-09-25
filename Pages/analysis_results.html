@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis Results - Urban Green Space Optimizer</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Furbangree9896back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Section -->
+    <header class="bg-surface shadow-card border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <path d="M12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16Z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-primary">Urban Green Space Optimizer</h1>
+                        <p class="text-sm text-text-secondary">Environmental Planning Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="environmental_dashboard.html" class="text-text-secondary hover:text-primary transition-smooth">Dashboard</a>
+                    <a href="data_upload_manager.html" class="text-text-secondary hover:text-primary transition-smooth">Data Upload</a>
+                    <a href="analysis_results.html" class="text-primary font-medium">Analysis</a>
+                    <a href="user_profile_settings.html" class="text-text-secondary hover:text-primary transition-smooth">Profile</a>
+                </nav>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="flex items-center space-x-2 text-text-secondary hover:text-primary transition-smooth">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User Avatar" class="h-8 w-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            <span class="text-sm font-medium">Dr. Sarah Chen</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        <!-- Page Header -->
+        <div class="bg-surface border-b border-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="h-10 w-10 bg-primary-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-primary text-lg"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-semibold text-text-primary">Analysis Results</h2>
+                                <p class="text-text-secondary">Comprehensive environmental analysis for downtown district</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center space-x-4 text-sm text-text-secondary">
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-calendar text-primary"></i>
+                                <span>Generated: September 24, 2025</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-map-marker-alt text-primary"></i>
+                                <span>Downtown District, Metro City</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fas fa-clock text-primary"></i>
+                                <span>Analysis Duration: 2.3 minutes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex space-x-3">
+                        <button class="inline-flex items-center px-4 py-2 border border-border rounded-md shadow-sm text-sm font-medium text-text-secondary bg-surface hover:bg-gray-50 transition-smooth">
+                            <i class="fas fa-redo mr-2"></i>
+                            Re-run Analysis
+                        </button>
+                        <div class="relative">
+                            <button id="exportBtn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-600 transition-smooth">
+                                <i class="fas fa-download mr-2"></i>
+                                Export Results
+                            </button>
+                            <!-- Export Dropdown -->
+                            <div id="exportDropdown" class="hidden absolute right-0 mt-2 w-48 bg-surface rounded-md shadow-modal border border-border z-50">
+                                <div class="py-1">
+                                    <a href="javascript:void(0)" class="flex items-center px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-smooth">
+                                        <i class="fas fa-file-pdf text-error mr-3"></i>
+                                        PDF Report
+                                    </a>
+                                    <a href="javascript:void(0)" class="flex items-center px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-smooth">
+                                        <i class="fas fa-file-csv text-success mr-3"></i>
+                                        CSV Data
+                                    </a>
+                                    <a href="javascript:void(0)" class="flex items-center px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-smooth">
+                                        <i class="fas fa-file-code text-primary mr-3"></i>
+                                        GeoJSON
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Map and Results Panel -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Map Container -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border overflow-hidden">
+                        <div class="p-4 border-b border-border">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-medium text-text-primary">Analysis Map View</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="flex items-center space-x-1 text-sm text-text-secondary">
+                                        <div class="w-3 h-3 bg-success rounded-full"></div>
+                                        <span>High Vegetation</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1 text-sm text-text-secondary">
+                                        <div class="w-3 h-3 bg-warning rounded-full"></div>
+                                        <span>Medium Vegetation</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1 text-sm text-text-secondary">
+                                        <div class="w-3 h-3 bg-error rounded-full"></div>
+                                        <span>Low Vegetation</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="analysisMap" class="h-96 w-full"></div>
+                    </div>
+
+                    <!-- Results Summary -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border p-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-6">Analysis Summary</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Green Space Coverage -->
+                            <div class="text-center">
+                                <div class="relative inline-flex items-center justify-center w-20 h-20 mb-4">
+                                    <svg class="w-20 h-20 transform -rotate-90">
+                                        <circle cx="40" cy="40" r="36" stroke="#E5E7EB" stroke-width="8" fill="transparent"/>
+                                        <circle cx="40" cy="40" r="36" stroke="#059669" stroke-width="8" fill="transparent" stroke-dasharray="226.19" stroke-dashoffset="67.86" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-semibold text-success">70%</span>
+                                    </div>
+                                </div>
+                                <h4 class="text-sm font-medium text-text-primary">Green Space Coverage</h4>
+                                <p class="text-xs text-text-secondary mt-1">2,847 acres analyzed</p>
+                            </div>
+
+                            <!-- Vegetation Health -->
+                            <div class="text-center">
+                                <div class="relative inline-flex items-center justify-center w-20 h-20 mb-4">
+                                    <svg class="w-20 h-20 transform -rotate-90">
+                                        <circle cx="40" cy="40" r="36" stroke="#E5E7EB" stroke-width="8" fill="transparent"/>
+                                        <circle cx="40" cy="40" r="36" stroke="#D97706" stroke-width="8" fill="transparent" stroke-dasharray="226.19" stroke-dashoffset="90.48" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-semibold text-warning">60%</span>
+                                    </div>
+                                </div>
+                                <h4 class="text-sm font-medium text-text-primary">Vegetation Health</h4>
+                                <p class="text-xs text-text-secondary mt-1">NDVI Average: 0.65</p>
+                            </div>
+
+                            <!-- Recommended Areas -->
+                            <div class="text-center">
+                                <div class="relative inline-flex items-center justify-center w-20 h-20 mb-4">
+                                    <svg class="w-20 h-20 transform -rotate-90">
+                                        <circle cx="40" cy="40" r="36" stroke="#E5E7EB" stroke-width="8" fill="transparent"/>
+                                        <circle cx="40" cy="40" r="36" stroke="#2D5A27" stroke-width="8" fill="transparent" stroke-dasharray="226.19" stroke-dashoffset="113.10" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xl font-semibold text-primary">12</span>
+                                    </div>
+                                </div>
+                                <h4 class="text-sm font-medium text-text-primary">Optimal Zones</h4>
+                                <p class="text-xs text-text-secondary mt-1">New park locations</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Section -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Temporal Trend Chart -->
+                        <div class="bg-surface rounded-lg shadow-card border border-border p-6">
+                            <h3 class="text-lg font-medium text-text-primary mb-4">Vegetation Trends</h3>
+                            <div class="h-64">
+                                <canvas id="temporalChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Land Cover Distribution -->
+                        <div class="bg-surface rounded-lg shadow-card border border-border p-6">
+                            <h3 class="text-lg font-medium text-text-primary mb-4">Land Cover Distribution</h3>
+                            <div class="h-64">
+                                <canvas id="distributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zone Metrics Chart -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border p-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Zone Comparison Metrics</h3>
+                        <div class="h-80">
+                            <canvas id="zoneChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations Panel -->
+                <div class="space-y-6">
+                    <!-- Recommendations -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border">
+                        <div class="p-4 border-b border-border">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-robot text-primary"></i>
+                                <h3 class="text-lg font-medium text-text-primary">AI Recommendations</h3>
+                            </div>
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <!-- High Priority Recommendation -->
+                            <div class="border border-error-200 rounded-lg p-4 bg-error-50">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-error-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-exclamation text-error text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="text-sm font-medium text-error">High Priority</span>
+                                            <span class="text-xs bg-error text-white px-2 py-1 rounded-full">Urgent</span>
+                                        </div>
+                                        <h4 class="text-sm font-medium text-text-primary mb-1">Urban Heat Island Mitigation</h4>
+                                        <p class="text-xs text-text-secondary mb-2">Downtown core shows 15% vegetation deficit. Immediate tree planting recommended in commercial district.</p>
+                                        <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                            <span><i class="fas fa-calendar mr-1"></i>Timeline: 3-6 months</span>
+                                            <span><i class="fas fa-dollar-sign mr-1"></i>Est. Cost: $2.4M</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Medium Priority Recommendation -->
+                            <div class="border border-warning-200 rounded-lg p-4 bg-warning-50">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-warning-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-seedling text-warning text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="text-sm font-medium text-warning">Medium Priority</span>
+                                            <span class="text-xs bg-warning text-white px-2 py-1 rounded-full">Planned</span>
+                                        </div>
+                                        <h4 class="text-sm font-medium text-text-primary mb-1">Green Corridor Development</h4>
+                                        <p class="text-xs text-text-secondary mb-2">Connect existing parks through linear green spaces along River Avenue and Main Street.</p>
+                                        <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                            <span><i class="fas fa-calendar mr-1"></i>Timeline: 6-12 months</span>
+                                            <span><i class="fas fa-dollar-sign mr-1"></i>Est. Cost: $1.8M</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Low Priority Recommendation -->
+                            <div class="border border-success-200 rounded-lg p-4 bg-success-50">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-leaf text-success text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <span class="text-sm font-medium text-success">Low Priority</span>
+                                            <span class="text-xs bg-success text-white px-2 py-1 rounded-full">Future</span>
+                                        </div>
+                                        <h4 class="text-sm font-medium text-text-primary mb-1">Biodiversity Enhancement</h4>
+                                        <p class="text-xs text-text-secondary mb-2">Introduce native species in existing parks to improve ecosystem diversity and wildlife habitat.</p>
+                                        <div class="flex items-center space-x-4 text-xs text-text-secondary">
+                                            <span><i class="fas fa-calendar mr-1"></i>Timeline: 12-18 months</span>
+                                            <span><i class="fas fa-dollar-sign mr-1"></i>Est. Cost: $850K</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border p-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Key Performance Indicators</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Air Quality Index</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-20 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-success h-2 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium text-success">Good</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Carbon Sequestration</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-20 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium text-primary">2.4 tons/year</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Biodiversity Score</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-20 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-warning h-2 rounded-full" style="width: 55%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium text-warning">Moderate</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Urban Heat Reduction</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-20 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-accent h-2 rounded-full" style="width: 72%"></div>
+                                    </div>
+                                    <span class="text-sm font-medium text-accent">3.2°F</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Parameters -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border p-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4">Analysis Parameters</h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">Analysis Type:</span>
+                                <span class="text-text-primary font-medium">NDVI + Land Cover</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">Buffer Zone:</span>
+                                <span class="text-text-primary font-medium">1.2 km</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">Data Sources:</span>
+                                <span class="text-text-primary font-medium">Satellite + GIS</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">Resolution:</span>
+                                <span class="text-text-primary font-medium">10m/pixel</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">Confidence Level:</span>
+                                <span class="text-success font-medium">94.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-4">
+                    <p class="text-sm text-text-secondary">© 2025 Urban Green Space Optimizer. All Rights Reserved.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        Privacy Policy
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-file-contract mr-1"></i>
+                        Terms of Service
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-question-circle mr-1"></i>
+                        Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Leaflet Map
+        let analysisMap;
+        
+        function initializeMap() {
+            // Initialize map
+            analysisMap = L.map('analysisMap').setView([40.7128, -74.0060], 12);
+            
+            // Add base tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(analysisMap);
+            
+            // Add vegetation zones with different colors
+            const highVegZone = L.polygon([
+                [40.7200, -74.0100],
+                [40.7250, -74.0050],
+                [40.7220, -74.0020],
+                [40.7180, -74.0070]
+            ], {
+                color: '#059669',
+                fillColor: '#059669',
+                fillOpacity: 0.6,
+                weight: 2
+            }).addTo(analysisMap);
+            
+            const mediumVegZone = L.polygon([
+                [40.7100, -74.0150],
+                [40.7150, -74.0100],
+                [40.7120, -74.0080],
+                [40.7080, -74.0120]
+            ], {
+                color: '#D97706',
+                fillColor: '#D97706',
+                fillOpacity: 0.6,
+                weight: 2
+            }).addTo(analysisMap);
+            
+            const lowVegZone = L.polygon([
+                [40.7050, -74.0080],
+                [40.7100, -74.0030],
+                [40.7070, -74.0010],
+                [40.7030, -74.0050]
+            ], {
+                color: '#DC2626',
+                fillColor: '#DC2626',
+                fillOpacity: 0.6,
+                weight: 2
+            }).addTo(analysisMap);
+            
+            // Add recommended park locations
+            const recommendedSites = [
+                [40.7180, -74.0090],
+                [40.7120, -74.0040],
+                [40.7080, -74.0110]
+            ];
+            
+            recommendedSites.forEach((coords, index) => {
+                L.marker(coords, {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div class="w-6 h-6 bg-primary rounded-full border-2 border-white shadow-lg flex items-center justify-center">
+                                <i class="fas fa-plus text-white text-xs"></i>
+                               </div>`,
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    })
+                }).bindPopup(`
+                    <div class="p-2">
+                        <h4 class="font-medium text-sm">Recommended Park Site ${index + 1}</h4>
+                        <p class="text-xs text-gray-600 mt-1">Optimal location for new green space development</p>
+                        <div class="mt-2 text-xs">
+                            <div>Size: 2.3 acres</div>
+                            <div>Priority: High</div>
+                        </div>
+                    </div>
+                `).addTo(analysisMap);
+            });
+            
+            // Add tooltips for zones
+            highVegZone.bindTooltip("High Vegetation Zone<br>NDVI: 0.8-1.0", {permanent: false});
+            mediumVegZone.bindTooltip("Medium Vegetation Zone<br>NDVI: 0.4-0.8", {permanent: false});
+            lowVegZone.bindTooltip("Low Vegetation Zone<br>NDVI: 0.0-0.4", {permanent: false});
+        }
+        
+        // Initialize Charts
+        function initializeCharts() {
+            // Temporal Trend Chart
+            const temporalCtx = document.getElementById('temporalChart').getContext('2d');
+            new Chart(temporalCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan 2024', 'Apr 2024', 'Jul 2024', 'Oct 2024', 'Jan 2025', 'Apr 2025', 'Jul 2025', 'Sep 2025'],
+                    datasets: [{
+                        label: 'NDVI Average',
+                        data: [0.45, 0.52, 0.68, 0.58, 0.48, 0.55, 0.72, 0.65],
+                        borderColor: '#2D5A27',
+                        backgroundColor: 'rgba(45, 90, 39, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Green Space %',
+                        data: [62, 65, 74, 70, 64, 67, 76, 70],
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1
+                        }
+                    }
+                }
+            });
+            
+            // Distribution Pie Chart
+            const distributionCtx = document.getElementById('distributionChart').getContext('2d');
+            new Chart(distributionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Green Spaces', 'Urban Areas', 'Water Bodies', 'Infrastructure'],
+                    datasets: [{
+                        data: [45, 35, 12, 8],
+                        backgroundColor: ['#059669', '#6B7280', '#3B82F6', '#8B5CF6'],
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+            
+            // Zone Comparison Bar Chart
+            const zoneCtx = document.getElementById('zoneChart').getContext('2d');
+            new Chart(zoneCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Downtown', 'Residential North', 'Industrial East', 'Waterfront', 'Suburban West', 'Commercial South'],
+                    datasets: [{
+                        label: 'Current Green Coverage (%)',
+                        data: [25, 65, 15, 45, 78, 32],
+                        backgroundColor: '#4A7C59'
+                    }, {
+                        label: 'Recommended Coverage (%)',
+                        data: [45, 70, 35, 60, 80, 50],
+                        backgroundColor: '#8FBC8F'
+                    }, {
+                        label: 'Air Quality Index',
+                        data: [45, 78, 32, 68, 85, 52],
+                        backgroundColor: '#2D5A27'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Export functionality
+        document.getElementById('exportBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('exportDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('exportDropdown');
+            const exportBtn = document.getElementById('exportBtn');
+            
+            if (!exportBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        
+        // Handle export options
+        document.querySelectorAll('#exportDropdown a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const format = this.textContent.trim();
+                
+                // Show loading state
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i>Generating...';
+                
+                // Simulate export process
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    document.getElementById('exportDropdown').classList.add('hidden');
+                    
+                    // Show success message
+                    showNotification(`${format} export completed successfully!`, 'success');
+                }, 2000);
+            });
+        });
+        
+        // Notification function
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-modal border max-w-sm transform transition-all duration-300 translate-x-full`;
+            
+            const bgColor = type === 'success' ? 'bg-success-50 border-success-200' : 
+                           type === 'error' ? 'bg-error-50 border-error-200' : 
+                           'bg-primary-50 border-primary-200';
+            
+            const iconColor = type === 'success' ? 'text-success' : 
+                            type === 'error' ? 'text-error' : 
+                            'text-primary';
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 
+                        'fa-info-circle';
+            
+            notification.className += ` ${bgColor}`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas ${icon} ${iconColor}"></i>
+                    <span class="text-sm font-medium text-text-primary">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-text-secondary hover:text-text-primary">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMap();
+            initializeCharts();
+        });
+        
+        // Handle responsive behavior
+        window.addEventListener('resize', function() {
+            if (analysisMap) {
+                analysisMap.invalidateSize();
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

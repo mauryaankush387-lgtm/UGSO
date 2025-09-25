@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Urban Green Space Optimizer</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Furbangree9896back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Section -->
+    <header class="bg-surface shadow-card border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <path d="M12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16Z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-primary">Urban Green Space Optimizer</h1>
+                        <p class="text-sm text-text-secondary">Environmental Planning Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="environmental_dashboard.html" class="text-text-secondary hover:text-primary transition-smooth">Dashboard</a>
+                    <a href="data_upload_manager.html" class="text-text-secondary hover:text-primary transition-smooth">Data Upload</a>
+                    <a href="analysis_results.html" class="text-text-secondary hover:text-primary transition-smooth">Analysis</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg width=" 60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%232D5A27" fill-opacity="0.1"><circle cx="30" cy="30" r="2"></circle><circle cx="10" cy="10" r="1"></circle><circle cx="50" cy="10" r="1"></circle><circle cx="10" cy="50" r="1"></circle><circle cx="50" cy="50" r="1"></circle></g>'); background-size: 60px 60px;"></g></div>
+        </div>
+
+        <div class="max-w-md w-full space-y-8 relative z-10">
+            <!-- Trust Signals -->
+            <div class="text-center">
+                <div class="flex justify-center space-x-4 mb-6">
+                    <div class="flex items-center space-x-2 bg-success-50 px-3 py-1 rounded-full">
+                        <i class="fas fa-shield-alt text-success text-sm"></i>
+                        <span class="text-xs font-medium text-success-700">Government Certified</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-primary-50 px-3 py-1 rounded-full">
+                        <i class="fas fa-leaf text-primary text-sm"></i>
+                        <span class="text-xs font-medium text-primary-700">EPA Compliant</span>
+                    </div>
+                </div>
+                
+                <!-- Environmental Icon -->
+                <div class="mx-auto h-16 w-16 bg-primary-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-tree text-primary text-2xl"></i>
+                </div>
+                
+                <h2 class="text-3xl font-semibold text-text-primary">Welcome Back</h2>
+                <p class="mt-2 text-text-secondary">Sign in to access your environmental analysis dashboard</p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="bg-surface shadow-card rounded-lg p-8 border border-border">
+                <form class="space-y-6" id="loginForm">
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-text-primary mb-2">
+                            <i class="fas fa-envelope text-text-secondary mr-2"></i>
+                            Email Address
+                        </label>
+                        <input id="email" name="email" type="email" autocomplete="email" required class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary placeholder-text-secondary" placeholder="Enter your email address" value="planner@cityplanning.gov" />
+                        <div class="mt-1 text-sm text-error hidden" id="emailError">Please enter a valid email address</div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-text-primary mb-2">
+                            <i class="fas fa-lock text-text-secondary mr-2"></i>
+                            Password
+                        </label>
+                        <div class="relative">
+                            <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary placeholder-text-secondary pr-12" placeholder="Enter your password" value="GreenCity2025!" />
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword()">
+                                <i class="fas fa-eye text-text-secondary hover:text-primary transition-smooth" id="passwordToggle"></i>
+                            </button>
+                        </div>
+                        <div class="mt-1 text-sm text-error hidden" id="passwordError">Password is required</div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                            <label for="remember-me" class="ml-2 block text-sm text-text-secondary">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div class="text-sm">
+                            <a href="javascript:void(0)" class="font-medium text-primary hover:text-primary-600 transition-smooth">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sign In Button -->
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-smooth">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Sign In to Dashboard
+                        </button>
+                    </div>
+
+                    <!-- Alternative Login Options -->
+                    <div class="mt-6">
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-border"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-surface text-text-secondary">Or continue with</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 grid grid-cols-2 gap-3">
+                            <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-border rounded-md shadow-sm bg-surface text-sm font-medium text-text-secondary hover:bg-gray-50 transition-smooth">
+                                <i class="fab fa-google text-red-500 mr-2"></i>
+                                Google
+                            </button>
+                            <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-border rounded-md shadow-sm bg-surface text-sm font-medium text-text-secondary hover:bg-gray-50 transition-smooth">
+                                <i class="fab fa-microsoft text-blue-500 mr-2"></i>
+                                Microsoft
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Create Account Link -->
+                    <div class="text-center">
+                        <p class="text-sm text-text-secondary">
+                            Don't have an account? 
+                            <a href="register.html" class="font-medium text-primary hover:text-primary-600 transition-smooth">
+                                Create Account
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="text-center">
+                <div class="bg-primary-50 rounded-lg p-4 border border-primary-200">
+                    <div class="flex items-center justify-center space-x-2 mb-2">
+                        <i class="fas fa-info-circle text-primary"></i>
+                        <span class="text-sm font-medium text-primary-700">For Municipal Users</span>
+                    </div>
+                    <p class="text-xs text-primary-600">
+                        This platform is designed for urban planners, environmental consultants, and municipal officials. 
+                        Contact your IT administrator for enterprise access credentials.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-4">
+                    <p class="text-sm text-text-secondary">© 2025 Urban Green Space Optimizer. All Rights Reserved.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        Privacy Policy
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-file-contract mr-1"></i>
+                        Terms of Service
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-question-circle mr-1"></i>
+                        Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Form validation and submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Reset error states
+            document.getElementById('emailError').classList.add('hidden');
+            document.getElementById('passwordError').classList.add('hidden');
+            
+            let isValid = true;
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('emailError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Password validation
+            if (!password) {
+                document.getElementById('passwordError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show loading state
+                const submitBtn = document.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing In...';
+                submitBtn.disabled = true;
+                
+                // Simulate login process
+                setTimeout(() => {
+                    // Redirect to dashboard
+                    window.location.href = 'environmental_dashboard.html';
+                }, 1500);
+            }
+        });
+        
+        // Password toggle functionality
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.classList.remove('fa-eye');
+                passwordToggle.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.classList.remove('fa-eye-slash');
+                passwordToggle.classList.add('fa-eye');
+            }
+        }
+        
+        // Real-time email validation
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                emailError.classList.remove('hidden');
+            } else {
+                emailError.classList.add('hidden');
+            }
+        });
+        
+        // Real-time password validation
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const passwordError = document.getElementById('passwordError');
+            
+            if (password.length > 0) {
+                passwordError.classList.add('hidden');
+            }
+        });
+        
+        // Add focus states for better accessibility
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('ring-2', 'ring-primary', 'ring-opacity-50');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('ring-2', 'ring-primary', 'ring-opacity-50');
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

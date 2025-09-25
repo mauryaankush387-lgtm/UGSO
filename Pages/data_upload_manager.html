@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Upload Manager - Urban Green Space Optimizer</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Furbangree9896back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Section -->
+    <header class="bg-surface shadow-card border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <path d="M12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16Z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-primary">Urban Green Space Optimizer</h1>
+                        <p class="text-sm text-text-secondary">Environmental Planning Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="environmental_dashboard.html" class="text-text-secondary hover:text-primary transition-smooth">Dashboard</a>
+                    <a href="data_upload_manager.html" class="text-primary font-medium">Data Upload</a>
+                    <a href="analysis_results.html" class="text-text-secondary hover:text-primary transition-smooth">Analysis</a>
+                    <a href="user_profile_settings.html" class="text-text-secondary hover:text-primary transition-smooth">Settings</a>
+                </nav>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="flex items-center space-x-2 text-text-secondary hover:text-primary transition-smooth" onclick="toggleUserMenu()">
+                            <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-primary text-sm"></i>
+                            </div>
+                            <span class="hidden md:block text-sm font-medium">Planner</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="userMenu" class="absolute right-0 mt-2 w-48 bg-surface rounded-md shadow-modal border border-border hidden z-50">
+                            <div class="py-1">
+                                <a href="user_profile_settings.html" class="block px-4 py-2 text-sm text-text-secondary hover:bg-primary-50 hover:text-primary transition-smooth">
+                                    <i class="fas fa-user-cog mr-2"></i>Profile Settings
+                                </a>
+                                <a href="login.html" class="block px-4 py-2 text-sm text-text-secondary hover:bg-primary-50 hover:text-primary transition-smooth">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-semibold text-text-primary">Data Upload Manager</h1>
+                    <p class="mt-2 text-text-secondary">Import GIS and satellite data files for environmental analysis</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-2 bg-success-50 px-3 py-1 rounded-full">
+                        <i class="fas fa-shield-alt text-success text-sm"></i>
+                        <span class="text-xs font-medium text-success-700">Secure Upload</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-primary-50 px-3 py-1 rounded-full">
+                        <i class="fas fa-database text-primary text-sm"></i>
+                        <span class="text-xs font-medium text-primary-700">GIS Compatible</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-surface rounded-lg p-6 shadow-card border border-border">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-file-upload text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-text-secondary">Total Uploads</p>
+                        <p class="text-2xl font-semibold text-text-primary">24</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-surface rounded-lg p-6 shadow-card border border-border">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-success-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-check-circle text-success"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-text-secondary">Processed</p>
+                        <p class="text-2xl font-semibold text-text-primary">22</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-surface rounded-lg p-6 shadow-card border border-border">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-warning-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-text-secondary">Processing</p>
+                        <p class="text-2xl font-semibold text-text-primary">2</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-surface rounded-lg p-6 shadow-card border border-border">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-accent-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-hdd text-accent-600"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-text-secondary">Storage Used</p>
+                        <p class="text-2xl font-semibold text-text-primary">2.4GB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Zone -->
+        <div class="bg-surface rounded-lg shadow-card border border-border mb-8">
+            <div class="p-6">
+                <h2 class="text-lg font-semibold text-text-primary mb-4">Upload New Data</h2>
+                
+                <!-- Drag and Drop Zone -->
+                <div id="uploadZone" class="border-2 border-dashed border-border rounded-lg p-12 text-center hover:border-primary hover:bg-primary-50 transition-smooth cursor-pointer">
+                    <div class="space-y-4">
+                        <div class="mx-auto h-16 w-16 bg-primary-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-cloud-upload-alt text-primary text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-text-primary">Drop files here or click to browse</h3>
+                            <p class="text-text-secondary mt-2">Support for GeoJSON, Shapefile, and Raster formats</p>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-2 mt-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
+                                <i class="fas fa-file-code mr-1"></i>.geojson
+                            </span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-700">
+                                <i class="fas fa-file-archive mr-1"></i>.shp
+                            </span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-100 text-accent-700">
+                                <i class="fas fa-file-image mr-1"></i>.tiff
+                            </span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-700">
+                                <i class="fas fa-file-csv mr-1"></i>.csv
+                            </span>
+                        </div>
+                    </div>
+                    <input type="file" id="fileInput" class="hidden" multiple accept=".geojson,.shp,.tiff,.tif,.csv,.json" />
+                </div>
+
+                <!-- Upload Progress -->
+                <div id="uploadProgress" class="mt-6 hidden">
+                    <div class="bg-primary-50 rounded-lg p-4 border border-primary-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-medium text-primary-700">Uploading files...</span>
+                            <span class="text-sm text-primary-600" id="progressText">0%</span>
+                        </div>
+                        <div class="w-full bg-primary-200 rounded-full h-2">
+                            <div class="bg-primary h-2 rounded-full transition-all duration-300" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Batch Actions -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-6 space-y-3 sm:space-y-0">
+                    <div class="flex items-center space-x-4">
+                        <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-600 transition-smooth">
+                            <i class="fas fa-upload mr-2"></i>
+                            Select Files
+                        </button>
+                        <button class="inline-flex items-center px-4 py-2 border border-border text-sm font-medium rounded-md text-text-secondary bg-surface hover:bg-gray-50 transition-smooth">
+                            <i class="fas fa-folder-open mr-2"></i>
+                            Browse Samples
+                        </button>
+                    </div>
+                    <div class="text-sm text-text-secondary">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        Maximum file size: 100MB per file
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Management Table -->
+        <div class="bg-surface rounded-lg shadow-card border border-border">
+            <div class="px-6 py-4 border-b border-border">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0">
+                    <h2 class="text-lg font-semibold text-text-primary">Uploaded Files</h2>
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <input type="text" placeholder="Search files..." class="pl-10 pr-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary placeholder-text-secondary" />
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-text-secondary"></i>
+                            </div>
+                        </div>
+                        <select class="border border-border rounded-md px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                            <option>All Formats</option>
+                            <option>GeoJSON</option>
+                            <option>Shapefile</option>
+                            <option>Raster</option>
+                            <option>CSV</option>
+                        </select>
+                        <button class="inline-flex items-center px-3 py-2 border border-border text-sm font-medium rounded-md text-text-secondary bg-surface hover:bg-gray-50 transition-smooth">
+                            <i class="fas fa-filter mr-2"></i>
+                            Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Table View -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="min-w-full divide-y divide-border">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">
+                                <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">File Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Format</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Size</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Upload Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-text-secondary uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-surface divide-y divide-border">
+                        <!-- File Row 1 -->
+                        <tr class="hover:bg-gray-50 transition-smooth">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8">
+                                        <div class="h-8 w-8 bg-primary-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-file-code text-primary text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium text-text-primary">central_park_boundaries.geojson</div>
+                                        <div class="text-sm text-text-secondary">Park boundary data</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
+                                    GeoJSON
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">2.4 MB</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">Sep 24, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-700">
+                                    <i class="fas fa-check-circle mr-1"></i>Processed
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex items-center space-x-2">
+                                    <button class="text-primary hover:text-primary-600 transition-smooth" title="Preview">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-secondary hover:text-secondary-600 transition-smooth" title="Edit Metadata">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-accent-600 hover:text-accent-700 transition-smooth" title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="text-error hover:text-error-600 transition-smooth" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- File Row 2 -->
+                        <tr class="hover:bg-gray-50 transition-smooth">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8">
+                                        <div class="h-8 w-8 bg-secondary-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-file-archive text-secondary text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium text-text-primary">vegetation_index_2025.shp</div>
+                                        <div class="text-sm text-text-secondary">NDVI vegetation data</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-700">
+                                    Shapefile
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">15.7 MB</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">Sep 23, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning-100 text-warning-700">
+                                    <i class="fas fa-clock mr-1"></i>Processing
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex items-center space-x-2">
+                                    <button class="text-text-secondary cursor-not-allowed" title="Preview" disabled>
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-secondary hover:text-secondary-600 transition-smooth" title="Edit Metadata">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-text-secondary cursor-not-allowed" title="Download" disabled>
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="text-error hover:text-error-600 transition-smooth" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- File Row 3 -->
+                        <tr class="hover:bg-gray-50 transition-smooth">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-8 w-8">
+                                        <div class="h-8 w-8 bg-accent-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-file-image text-accent-600 text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-medium text-text-primary">satellite_imagery_q3.tiff</div>
+                                        <div class="text-sm text-text-secondary">High-resolution satellite data</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-100 text-accent-700">
+                                    TIFF
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">89.2 MB</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">Sep 22, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-700">
+                                    <i class="fas fa-check-circle mr-1"></i>Processed
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex items-center space-x-2">
+                                    <button class="text-primary hover:text-primary-600 transition-smooth" title="Preview">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-secondary hover:text-secondary-600 transition-smooth" title="Edit Metadata">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-accent-600 hover:text-accent-700 transition-smooth" title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="text-error hover:text-error-600 transition-smooth" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Card View -->
+            <div class="md:hidden">
+                <div class="space-y-4 p-4">
+                    <!-- File Card 1 -->
+                    <div class="bg-surface border border-border rounded-lg p-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="rounded border-border text-primary focus:ring-primary mt-1" />
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <div class="h-10 w-10 bg-primary-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-file-code text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-text-primary truncate">central_park_boundaries.geojson</p>
+                                    <p class="text-xs text-text-secondary">Park boundary data</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-100 text-success-700">
+                                <i class="fas fa-check-circle mr-1"></i>Processed
+                            </span>
+                        </div>
+                        <div class="mt-3 flex items-center justify-between text-sm text-text-secondary">
+                            <span>GeoJSON • 2.4 MB</span>
+                            <span>Sep 24, 2025</span>
+                        </div>
+                        <div class="mt-3 flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <button class="text-primary hover:text-primary-600 transition-smooth">
+                                    <i class="fas fa-eye mr-1"></i>Preview
+                                </button>
+                                <button class="text-secondary hover:text-secondary-600 transition-smooth">
+                                    <i class="fas fa-edit mr-1"></i>Edit
+                                </button>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-accent-600 hover:text-accent-700 transition-smooth">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="text-error hover:text-error-600 transition-smooth">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Card 2 -->
+                    <div class="bg-surface border border-border rounded-lg p-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="rounded border-border text-primary focus:ring-primary mt-1" />
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <div class="h-10 w-10 bg-secondary-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-file-archive text-secondary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-text-primary truncate">vegetation_index_2025.shp</p>
+                                    <p class="text-xs text-text-secondary">NDVI vegetation data</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning-100 text-warning-700">
+                                <i class="fas fa-clock mr-1"></i>Processing
+                            </span>
+                        </div>
+                        <div class="mt-3 flex items-center justify-between text-sm text-text-secondary">
+                            <span>Shapefile • 15.7 MB</span>
+                            <span>Sep 23, 2025</span>
+                        </div>
+                        <div class="mt-3 flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <button class="text-text-secondary cursor-not-allowed">
+                                    <i class="fas fa-eye mr-1"></i>Preview
+                                </button>
+                                <button class="text-secondary hover:text-secondary-600 transition-smooth">
+                                    <i class="fas fa-edit mr-1"></i>Edit
+                                </button>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-text-secondary cursor-not-allowed">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="text-error hover:text-error-600 transition-smooth">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Footer -->
+            <div class="px-6 py-4 border-t border-border">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0">
+                    <div class="flex items-center space-x-4">
+                        <button class="inline-flex items-center px-3 py-2 border border-border text-sm font-medium rounded-md text-text-secondary bg-surface hover:bg-gray-50 transition-smooth">
+                            <i class="fas fa-download mr-2"></i>
+                            Bulk Download
+                        </button>
+                        <button class="inline-flex items-center px-3 py-2 border border-border text-sm font-medium rounded-md text-error bg-surface hover:bg-error-50 transition-smooth">
+                            <i class="fas fa-trash mr-2"></i>
+                            Delete Selected
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-text-secondary">Showing 1-3 of 24 files</span>
+                        <div class="flex items-center space-x-1">
+                            <button class="p-2 border border-border rounded-md text-text-secondary hover:bg-gray-50 transition-smooth">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="p-2 border border-border rounded-md text-text-secondary hover:bg-gray-50 transition-smooth">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Metadata Modal -->
+    <div id="metadataModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-surface rounded-lg shadow-modal max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div class="px-6 py-4 border-b border-border">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-text-primary">Edit File Metadata</h3>
+                    <button onclick="closeMetadataModal()" class="text-text-secondary hover:text-text-primary transition-smooth">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">File Name</label>
+                        <input type="text" value="central_park_boundaries.geojson" class="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Description</label>
+                        <textarea rows="3" class="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" placeholder="Enter file description...">Park boundary data for Central Park including walking paths and recreational areas.</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Tags</label>
+                        <input type="text" value="parks, boundaries, recreation, central-park" class="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" placeholder="Enter tags separated by commas" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Category</label>
+                        <select class="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                            <option>Boundaries</option>
+                            <option>Vegetation</option>
+                            <option>Satellite Imagery</option>
+                            <option>Environmental Data</option>
+                            <option>Infrastructure</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center justify-end space-x-3 pt-4">
+                        <button type="button" onclick="closeMetadataModal()" class="px-4 py-2 border border-border text-sm font-medium rounded-md text-text-secondary bg-surface hover:bg-gray-50 transition-smooth">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-600 transition-smooth">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-4">
+                    <p class="text-sm text-text-secondary">© 2025 Urban Green Space Optimizer. All Rights Reserved.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        Privacy Policy
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-file-contract mr-1"></i>
+                        Terms of Service
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-question-circle mr-1"></i>
+                        Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // User menu toggle
+        function toggleUserMenu() {
+            const userMenu = document.getElementById('userMenu');
+            userMenu.classList.toggle('hidden');
+        }
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            const userButton = event.target.closest('button');
+            
+            if (!userButton || !userButton.onclick) {
+                userMenu.classList.add('hidden');
+            }
+        });
+
+        // File upload functionality
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+
+        // Click to upload
+        uploadZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Drag and drop functionality
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('border-primary', 'bg-primary-50');
+        });
+
+        uploadZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('border-primary', 'bg-primary-50');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('border-primary', 'bg-primary-50');
+            
+            const files = e.dataTransfer.files;
+            handleFileUpload(files);
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            handleFileUpload(files);
+        });
+
+        // Handle file upload
+        function handleFileUpload(files) {
+            if (files.length === 0) return;
+
+            // Show progress
+            uploadProgress.classList.remove('hidden');
+            
+            // Simulate upload progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Hide progress after completion
+                    setTimeout(() => {
+                        uploadProgress.classList.add('hidden');
+                        // Reset progress
+                        progressBar.style.width = '0%';
+                        progressText.textContent = '0%';
+                        
+                        // Show success message
+                        showNotification('Files uploaded successfully!', 'success');
+                    }, 1000);
+                }
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+            }, 200);
+
+            // Validate file types
+            const allowedTypes = ['.geojson', '.shp', '.tiff', '.tif', '.csv', '.json'];
+            const invalidFiles = [];
+            
+            Array.from(files).forEach(file => {
+                const extension = '.' + file.name.split('.').pop().toLowerCase();
+                if (!allowedTypes.includes(extension)) {
+                    invalidFiles.push(file.name);
+                }
+            });
+
+            if (invalidFiles.length > 0) {
+                showNotification(`Unsupported file types: ${invalidFiles.join(', ')}`, 'error');
+            }
+        }
+
+        // Metadata modal functions
+        function openMetadataModal() {
+            document.getElementById('metadataModal').classList.remove('hidden');
+        }
+
+        function closeMetadataModal() {
+            document.getElementById('metadataModal').classList.add('hidden');
+        }
+
+        // Add event listeners for edit buttons
+        document.querySelectorAll('[title="Edit Metadata"]').forEach(button => {
+            button.addEventListener('click', openMetadataModal);
+        });
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-modal border max-w-sm transition-all duration-300 transform translate-x-full`;
+            
+            const colors = {
+                success: 'bg-success-50 border-success-200 text-success-700',
+                error: 'bg-error-50 border-error-200 text-error-700',
+                warning: 'bg-warning-50 border-warning-200 text-warning-700',
+                info: 'bg-primary-50 border-primary-200 text-primary-700'
+            };
+            
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            notification.className += ` ${colors[type]}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="${icons[type]} mr-2"></i>
+                    <span class="text-sm font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-current hover:opacity-75">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 5000);
+        }
+
+        // Delete confirmation
+        document.querySelectorAll('[title="Delete"]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Are you sure you want to delete this file? This action cannot be undone.')) {
+                    // Simulate deletion
+                    const row = button.closest('tr') || button.closest('.bg-surface');
+                    row.style.opacity = '0.5';
+                    setTimeout(() => {
+                        row.remove();
+                        showNotification('File deleted successfully', 'success');
+                    }, 300);
+                }
+            });
+        });
+
+        // Select all checkbox functionality
+        document.querySelector('thead input[type="checkbox"]')?.addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+
+        // Bulk actions
+        document.querySelector('button:has(.fa-download)')?.addEventListener('click', () => {
+            const selectedFiles = document.querySelectorAll('tbody input[type="checkbox"]:checked');
+            if (selectedFiles.length === 0) {
+                showNotification('Please select files to download', 'warning');
+                return;
+            }
+            showNotification(`Downloading ${selectedFiles.length} files...`, 'info');
+        });
+
+        document.querySelector('button:has(.fa-trash)')?.addEventListener('click', () => {
+            const selectedFiles = document.querySelectorAll('tbody input[type="checkbox"]:checked');
+            if (selectedFiles.length === 0) {
+                showNotification('Please select files to delete', 'warning');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to delete ${selectedFiles.length} selected files? This action cannot be undone.`)) {
+                selectedFiles.forEach(checkbox => {
+                    const row = checkbox.closest('tr') || checkbox.closest('.bg-surface');
+                    row.style.opacity = '0.5';
+                    setTimeout(() => {
+                        row.remove();
+                    }, 300);
+                });
+                showNotification(`${selectedFiles.length} files deleted successfully`, 'success');
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

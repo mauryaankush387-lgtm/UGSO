@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Urban Green Space Optimizer</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Furbangree9896back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Section -->
+    <header class="bg-surface shadow-card border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <path d="M12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16Z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-primary">Urban Green Space Optimizer</h1>
+                        <p class="text-sm text-text-secondary">Environmental Planning Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="environmental_dashboard.html" class="text-text-secondary hover:text-primary transition-smooth">Dashboard</a>
+                    <a href="data_upload_manager.html" class="text-text-secondary hover:text-primary transition-smooth">Data Upload</a>
+                    <a href="analysis_results.html" class="text-text-secondary hover:text-primary transition-smooth">Analysis</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg width=" 60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%232D5A27" fill-opacity="0.1"><circle cx="30" cy="30" r="2"></circle><circle cx="10" cy="10" r="1"></circle><circle cx="50" cy="10" r="1"></circle><circle cx="10" cy="50" r="1"></circle><circle cx="50" cy="50" r="1"></circle></g>'); background-size: 60px 60px;"></g></div>
+        </div>
+
+        <div class="max-w-2xl w-full space-y-8 relative z-10">
+            <!-- Trust Signals -->
+            <div class="text-center">
+                <div class="flex justify-center space-x-4 mb-6">
+                    <div class="flex items-center space-x-2 bg-success-50 px-3 py-1 rounded-full">
+                        <i class="fas fa-shield-alt text-success text-sm"></i>
+                        <span class="text-xs font-medium text-success-700">Government Certified</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-primary-50 px-3 py-1 rounded-full">
+                        <i class="fas fa-leaf text-primary text-sm"></i>
+                        <span class="text-xs font-medium text-primary-700">EPA Compliant</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-accent-50 px-3 py-1 rounded-full">
+                        <i class="fas fa-lock text-accent-600 text-sm"></i>
+                        <span class="text-xs font-medium text-accent-700">Secure Platform</span>
+                    </div>
+                </div>
+                
+                <!-- Environmental Icon -->
+                <div class="mx-auto h-16 w-16 bg-primary-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-seedling text-primary text-2xl"></i>
+                </div>
+                
+                <h2 class="text-3xl font-semibold text-text-primary">Create Your Account</h2>
+                <p class="mt-2 text-text-secondary">Join the environmental planning community and start optimizing urban green spaces</p>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="bg-surface shadow-card rounded-lg p-8 border border-border">
+                <form class="space-y-6" id="registerForm">
+                    <!-- Personal Information Section -->
+                    <div class="border-b border-border pb-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4 flex items-center">
+                            <i class="fas fa-user text-primary mr-2"></i>
+                            Personal Information
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Full Name -->
+                            <div>
+                                <label for="fullName" class="block text-sm font-medium text-text-primary mb-2">
+                                    Full Name *
+                                </label>
+                                <input id="fullName" name="fullName" type="text" required class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary placeholder-text-secondary" placeholder="Enter your full name" />
+                                <div class="mt-1 text-sm text-error hidden" id="fullNameError">Full name is required</div>
+                            </div>
+
+                            <!-- Email Address -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-text-primary mb-2">
+                                    Email Address *
+                                </label>
+                                <input id="email" name="email" type="email" autocomplete="email" required class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary placeholder-text-secondary" placeholder="Enter your email address" />
+                                <div class="mt-1 text-sm text-error hidden" id="emailError">Please enter a valid email address</div>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mt-6">
+                            <label for="password" class="block text-sm font-medium text-text-primary mb-2">
+                                Password *
+                            </label>
+                            <div class="relative">
+                                <input id="password" name="password" type="password" autocomplete="new-password" required class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary placeholder-text-secondary pr-12" placeholder="Create a strong password" />
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePassword()">
+                                    <i class="fas fa-eye text-text-secondary hover:text-primary transition-smooth" id="passwordToggle"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Password Strength Indicator -->
+                            <div class="mt-2">
+                                <div class="flex items-center space-x-2">
+                                    <div class="flex-1 bg-border rounded-full h-2">
+                                        <div id="passwordStrength" class="h-2 rounded-full transition-smooth" style="width: 0%;"></div>
+                                    </div>
+                                    <span id="passwordStrengthText" class="text-xs text-text-secondary">Weak</span>
+                                </div>
+                                <div class="mt-1 text-sm text-text-secondary">
+                                    Password must contain at least 8 characters, including uppercase, lowercase, and numbers
+                                </div>
+                            </div>
+                            <div class="mt-1 text-sm text-error hidden" id="passwordError">Password must meet strength requirements</div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Information Section -->
+                    <div class="border-b border-border pb-6">
+                        <h3 class="text-lg font-medium text-text-primary mb-4 flex items-center">
+                            <i class="fas fa-building text-primary mr-2"></i>
+                            Professional Information
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Organization Name -->
+                            <div>
+                                <label for="organization" class="block text-sm font-medium text-text-primary mb-2">
+                                    Organization Name *
+                                </label>
+                                <input id="organization" name="organization" type="text" required class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary placeholder-text-secondary" placeholder="Enter your organization name" />
+                                <div class="mt-1 text-sm text-error hidden" id="organizationError">Organization name is required</div>
+                            </div>
+
+                            <!-- Role Selection -->
+                            <div>
+                                <label for="role" class="block text-sm font-medium text-text-primary mb-2">
+                                    Professional Role *
+                                </label>
+                                <select id="role" name="role" required class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                                    <option value>Select your role</option>
+                                    <option value="urban_planner">Urban Planner</option>
+                                    <option value="environmental_consultant">Environmental Consultant</option>
+                                    <option value="municipal_employee">Municipal Employee</option>
+                                    <option value="researcher">Environmental Researcher</option>
+                                    <option value="landscape_architect">Landscape Architect</option>
+                                    <option value="community_organization">Community Organization</option>
+                                </select>
+                                <div class="mt-1 text-sm text-error hidden" id="roleError">Please select your professional role</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <!-- Organization Type -->
+                            <div>
+                                <label for="orgType" class="block text-sm font-medium text-text-primary mb-2">
+                                    Organization Type
+                                </label>
+                                <select id="orgType" name="orgType" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                                    <option value>Select organization type</option>
+                                    <option value="government">Government Agency</option>
+                                    <option value="private">Private Company</option>
+                                    <option value="nonprofit">Non-Profit Organization</option>
+                                    <option value="academic">Academic Institution</option>
+                                    <option value="consulting">Consulting Firm</option>
+                                </select>
+                            </div>
+
+                            <!-- Primary Use Case -->
+                            <div>
+                                <label for="useCase" class="block text-sm font-medium text-text-primary mb-2">
+                                    Primary Use Case
+                                </label>
+                                <select id="useCase" name="useCase" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                                    <option value>Select primary use case</option>
+                                    <option value="urban_planning">Urban Planning Projects</option>
+                                    <option value="environmental_assessment">Environmental Assessment</option>
+                                    <option value="green_infrastructure">Green Infrastructure Design</option>
+                                    <option value="research">Academic Research</option>
+                                    <option value="policy_development">Policy Development</option>
+                                    <option value="community_advocacy">Community Advocacy</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Privacy Section -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-medium text-text-primary flex items-center">
+                            <i class="fas fa-file-contract text-primary mr-2"></i>
+                            Terms & Privacy
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <!-- Terms of Service -->
+                            <div class="flex items-start">
+                                <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-primary focus:ring-primary border-border rounded mt-1" />
+                                <label for="terms" class="ml-3 block text-sm text-text-secondary">
+                                    I agree to the 
+                                    <a href="javascript:void(0)" class="font-medium text-primary hover:text-primary-600 transition-smooth">Terms of Service</a> 
+                                    and understand the platform's usage guidelines for environmental data analysis.
+                                </label>
+                            </div>
+
+                            <!-- Privacy Policy -->
+                            <div class="flex items-start">
+                                <input id="privacy" name="privacy" type="checkbox" required class="h-4 w-4 text-primary focus:ring-primary border-border rounded mt-1" />
+                                <label for="privacy" class="ml-3 block text-sm text-text-secondary">
+                                    I acknowledge that I have read and agree to the 
+                                    <a href="javascript:void(0)" class="font-medium text-primary hover:text-primary-600 transition-smooth">Privacy Policy</a> 
+                                    regarding data collection and processing.
+                                </label>
+                            </div>
+
+                            <!-- Marketing Communications -->
+                            <div class="flex items-start">
+                                <input id="marketing" name="marketing" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-border rounded mt-1" />
+                                <label for="marketing" class="ml-3 block text-sm text-text-secondary">
+                                    I would like to receive updates about new features, environmental insights, and platform improvements.
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-1 text-sm text-error hidden" id="termsError">Please accept the terms and privacy policy to continue</div>
+                    </div>
+
+                    <!-- Create Account Button -->
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-smooth">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Create Account
+                        </button>
+                    </div>
+
+                    <!-- Sign In Link -->
+                    <div class="text-center">
+                        <p class="text-sm text-text-secondary">
+                            Already have an account? 
+                            <a href="login.html" class="font-medium text-primary hover:text-primary-600 transition-smooth">
+                                Sign in here
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Data Security Information -->
+            <div class="text-center">
+                <div class="bg-success-50 rounded-lg p-4 border border-success-200">
+                    <div class="flex items-center justify-center space-x-2 mb-2">
+                        <i class="fas fa-shield-check text-success"></i>
+                        <span class="text-sm font-medium text-success-700">Your Data is Secure</span>
+                    </div>
+                    <p class="text-xs text-success-600">
+                        We use industry-standard encryption and security measures to protect your personal and professional information. 
+                        Your environmental data remains confidential and is only used for analysis purposes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-4">
+                    <p class="text-sm text-text-secondary">© 2025 Urban Green Space Optimizer. All Rights Reserved.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        Privacy Policy
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-file-contract mr-1"></i>
+                        Terms of Service
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-question-circle mr-1"></i>
+                        Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let feedback = 'Weak';
+            let color = '#DC2626'; // error color
+            
+            // Length check
+            if (password.length >= 8) strength += 1;
+            
+            // Uppercase check
+            if (/[A-Z]/.test(password)) strength += 1;
+            
+            // Lowercase check
+            if (/[a-z]/.test(password)) strength += 1;
+            
+            // Number check
+            if (/[0-9]/.test(password)) strength += 1;
+            
+            // Special character check
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            // Determine strength level
+            if (strength >= 4) {
+                feedback = 'Strong';
+                color = '#059669'; // success color
+            } else if (strength >= 3) {
+                feedback = 'Good';
+                color = '#D97706'; // warning color
+            } else if (strength >= 2) {
+                feedback = 'Fair';
+                color = '#D97706'; // warning color
+            }
+            
+            return {
+                strength: (strength / 5) * 100,
+                feedback: feedback,
+                color: color,
+                isValid: strength >= 3
+            };
+        }
+        
+        // Password toggle functionality
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.classList.remove('fa-eye');
+                passwordToggle.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.classList.remove('fa-eye-slash');
+                passwordToggle.classList.add('fa-eye');
+            }
+        }
+        
+        // Real-time password strength validation
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.getElementById('passwordStrength');
+            const strengthText = document.getElementById('passwordStrengthText');
+            const passwordError = document.getElementById('passwordError');
+            
+            if (password.length > 0) {
+                const result = checkPasswordStrength(password);
+                
+                strengthBar.style.width = result.strength + '%';
+                strengthBar.style.backgroundColor = result.color;
+                strengthText.textContent = result.feedback;
+                strengthText.style.color = result.color;
+                
+                if (result.isValid) {
+                    passwordError.classList.add('hidden');
+                }
+            } else {
+                strengthBar.style.width = '0%';
+                strengthText.textContent = 'Weak';
+                strengthText.style.color = '#6B7280';
+            }
+        });
+        
+        // Form validation and submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const organization = document.getElementById('organization').value.trim();
+            const role = document.getElementById('role').value;
+            const terms = document.getElementById('terms').checked;
+            const privacy = document.getElementById('privacy').checked;
+            
+            // Reset error states
+            document.querySelectorAll('.text-error').forEach(error => error.classList.add('hidden'));
+            
+            let isValid = true;
+            
+            // Full name validation
+            if (!fullName) {
+                document.getElementById('fullNameError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('emailError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Password validation
+            const passwordStrength = checkPasswordStrength(password);
+            if (!passwordStrength.isValid) {
+                document.getElementById('passwordError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Organization validation
+            if (!organization) {
+                document.getElementById('organizationError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Role validation
+            if (!role) {
+                document.getElementById('roleError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Terms validation
+            if (!terms || !privacy) {
+                document.getElementById('termsError').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show loading state
+                const submitBtn = document.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating Account...';
+                submitBtn.disabled = true;
+                
+                // Simulate registration process
+                setTimeout(() => {
+                    // Show success message
+                    alert('Account created successfully! Please check your email for verification instructions.');
+                    
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                }, 2000);
+            }
+        });
+        
+        // Real-time email validation
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value.trim();
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                emailError.classList.remove('hidden');
+            } else {
+                emailError.classList.add('hidden');
+            }
+        });
+        
+        // Real-time field validation
+        ['fullName', 'organization'].forEach(fieldId => {
+            document.getElementById(fieldId).addEventListener('input', function() {
+                const value = this.value.trim();
+                const errorElement = document.getElementById(fieldId + 'Error');
+                
+                if (value.length > 0) {
+                    errorElement.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Role selection validation
+        document.getElementById('role').addEventListener('change', function() {
+            const value = this.value;
+            const errorElement = document.getElementById('roleError');
+            
+            if (value) {
+                errorElement.classList.add('hidden');
+            }
+        });
+        
+        // Terms checkbox validation
+        ['terms', 'privacy'].forEach(checkboxId => {
+            document.getElementById(checkboxId).addEventListener('change', function() {
+                const terms = document.getElementById('terms').checked;
+                const privacy = document.getElementById('privacy').checked;
+                const termsError = document.getElementById('termsError');
+                
+                if (terms && privacy) {
+                    termsError.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Add focus states for better accessibility
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.parentElement.classList.add('ring-2', 'ring-primary', 'ring-opacity-50');
+            });
+            
+            element.addEventListener('blur', function() {
+                this.parentElement.classList.remove('ring-2', 'ring-primary', 'ring-opacity-50');
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

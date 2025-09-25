@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile Settings - Urban Green Space Optimizer</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Furbangree9896back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Section -->
+    <header class="bg-surface shadow-card border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <path d="M12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16Z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-primary">Urban Green Space Optimizer</h1>
+                        <p class="text-sm text-text-secondary">Environmental Planning Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="environmental_dashboard.html" class="text-text-secondary hover:text-primary transition-smooth">Dashboard</a>
+                    <a href="data_upload_manager.html" class="text-text-secondary hover:text-primary transition-smooth">Data Upload</a>
+                    <a href="analysis_results.html" class="text-text-secondary hover:text-primary transition-smooth">Analysis</a>
+                    <a href="user_profile_settings.html" class="text-primary font-medium">Settings</a>
+                </nav>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="flex items-center space-x-2 text-text-secondary hover:text-primary transition-smooth" onclick="toggleUserMenu()">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile" class="h-8 w-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            <span class="hidden sm:block">Dr. Sarah Chen</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        
+                        <!-- User Dropdown Menu -->
+                        <div id="userMenu" class="absolute right-0 mt-2 w-48 bg-surface rounded-md shadow-modal border border-border hidden z-50">
+                            <div class="py-1">
+                                <a href="user_profile_settings.html" class="block px-4 py-2 text-sm text-text-primary hover:bg-primary-50 transition-smooth">
+                                    <i class="fas fa-user mr-2"></i>Profile Settings
+                                </a>
+                                <a href="login.html" class="block px-4 py-2 text-sm text-text-primary hover:bg-primary-50 transition-smooth">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <div class="flex items-center space-x-3 mb-2">
+                <div class="h-10 w-10 bg-primary-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-user-cog text-primary text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-semibold text-text-primary">Profile Settings</h1>
+                    <p class="text-text-secondary">Manage your account information and preferences</p>
+                </div>
+            </div>
+            
+            <!-- Breadcrumb -->
+            <nav class="flex items-center space-x-2 text-sm text-text-secondary">
+                <a href="environmental_dashboard.html" class="hover:text-primary transition-smooth">Dashboard</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-primary">Profile Settings</span>
+            </nav>
+        </div>
+
+        <!-- Settings Container -->
+        <div class="bg-surface rounded-lg shadow-card border border-border">
+            <!-- Tab Navigation -->
+            <div class="border-b border-border">
+                <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                    <button onclick="switchTab('profile')" id="profileTab" class="tab-button active py-4 px-1 border-b-2 border-primary text-primary font-medium text-sm">
+                        <i class="fas fa-user mr-2"></i>
+                        Profile Information
+                    </button>
+                    <button onclick="switchTab('preferences')" id="preferencesTab" class="tab-button py-4 px-1 border-b-2 border-transparent text-text-secondary hover:text-primary hover:border-primary-200 font-medium text-sm transition-smooth">
+                        <i class="fas fa-cog mr-2"></i>
+                        Preferences
+                    </button>
+                    <button onclick="switchTab('security')" id="securityTab" class="tab-button py-4 px-1 border-b-2 border-transparent text-text-secondary hover:text-primary hover:border-primary-200 font-medium text-sm transition-smooth">
+                        <i class="fas fa-shield-alt mr-2"></i>
+                        Account Security
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                <!-- Profile Information Tab -->
+                <div id="profileContent" class="tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Profile Photo Section -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-primary-50 rounded-lg p-6 text-center">
+                                <div class="relative inline-block">
+                                    <img id="profileImage" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile Photo" class="h-32 w-32 rounded-full object-cover mx-auto border-4 border-surface shadow-card" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                    <button class="absolute bottom-0 right-0 h-10 w-10 bg-primary text-white rounded-full flex items-center justify-center shadow-card hover:bg-primary-600 transition-smooth">
+                                        <i class="fas fa-camera text-sm"></i>
+                                    </button>
+                                </div>
+                                <h3 class="mt-4 text-lg font-medium text-text-primary">Profile Photo</h3>
+                                <p class="text-sm text-text-secondary mt-1">Upload a professional photo</p>
+                                <input type="file" id="photoUpload" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)" />
+                                <button onclick="document.getElementById('photoUpload').click()" class="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-600 transition-smooth text-sm">
+                                    <i class="fas fa-upload mr-2"></i>
+                                    Change Photo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Profile Form -->
+                        <div class="lg:col-span-2">
+                            <form id="profileForm" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <!-- First Name -->
+                                    <div>
+                                        <label for="firstName" class="block text-sm font-medium text-text-primary mb-2">
+                                            <i class="fas fa-user text-text-secondary mr-2"></i>
+                                            First Name
+                                        </label>
+                                        <input type="text" id="firstName" name="firstName" value="Sarah" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" />
+                                    </div>
+
+                                    <!-- Last Name -->
+                                    <div>
+                                        <label for="lastName" class="block text-sm font-medium text-text-primary mb-2">
+                                            <i class="fas fa-user text-text-secondary mr-2"></i>
+                                            Last Name
+                                        </label>
+                                        <input type="text" id="lastName" name="lastName" value="Chen" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" />
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-text-primary mb-2">
+                                        <i class="fas fa-envelope text-text-secondary mr-2"></i>
+                                        Email Address
+                                    </label>
+                                    <input type="email" id="email" name="email" value="planner@cityplanning.gov" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" />
+                                </div>
+
+                                <!-- Organization -->
+                                <div>
+                                    <label for="organization" class="block text-sm font-medium text-text-primary mb-2">
+                                        <i class="fas fa-building text-text-secondary mr-2"></i>
+                                        Organization
+                                    </label>
+                                    <input type="text" id="organization" name="organization" value="Metropolitan City Planning Department" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" />
+                                </div>
+
+                                <!-- Professional Role -->
+                                <div>
+                                    <label for="role" class="block text-sm font-medium text-text-primary mb-2">
+                                        <i class="fas fa-briefcase text-text-secondary mr-2"></i>
+                                        Professional Role
+                                    </label>
+                                    <select id="role" name="role" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                                        <option value="urban_planner" selected>Urban Planner</option>
+                                        <option value="environmental_consultant">Environmental Consultant</option>
+                                        <option value="gis_analyst">GIS Analyst</option>
+                                        <option value="landscape_architect">Landscape Architect</option>
+                                        <option value="municipal_official">Municipal Official</option>
+                                        <option value="researcher">Environmental Researcher</option>
+                                    </select>
+                                </div>
+
+                                <!-- Phone -->
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-text-primary mb-2">
+                                        <i class="fas fa-phone text-text-secondary mr-2"></i>
+                                        Phone Number
+                                    </label>
+                                    <input type="tel" id="phone" name="phone" value="+1 (555) 123-4567" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary" />
+                                </div>
+
+                                <!-- Bio -->
+                                <div>
+                                    <label for="bio" class="block text-sm font-medium text-text-primary mb-2">
+                                        <i class="fas fa-align-left text-text-secondary mr-2"></i>
+                                        Professional Bio
+                                    </label>
+                                    <textarea id="bio" name="bio" rows="4" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary resize-none" placeholder="Brief description of your professional background and expertise...">Senior Urban Planner with 12+ years of experience in sustainable city development and green infrastructure planning. Specialized in environmental impact assessment and community-centered design approaches.</textarea>
+                                </div>
+
+                                <!-- Save Button -->
+                                <div class="flex justify-end">
+                                    <button type="submit" class="px-6 py-3 bg-primary text-white rounded-md hover:bg-primary-600 transition-smooth font-medium">
+                                        <i class="fas fa-save mr-2"></i>
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences Tab -->
+                <div id="preferencesContent" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Analysis Defaults -->
+                        <div class="space-y-6">
+                            <h3 class="text-lg font-medium text-text-primary flex items-center">
+                                <i class="fas fa-chart-line text-primary mr-3"></i>
+                                Analysis Defaults
+                            </h3>
+
+                            <!-- Default Analysis Type -->
+                            <div>
+                                <label for="defaultAnalysis" class="block text-sm font-medium text-text-primary mb-2">
+                                    Default Analysis Type
+                                </label>
+                                <select id="defaultAnalysis" name="defaultAnalysis" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                                    <option value="ndvi" selected>NDVI (Vegetation Index)</option>
+                                    <option value="ndwi">NDWI (Water Index)</option>
+                                    <option value="dem">Digital Elevation Model</option>
+                                    <option value="land_cover">Land Cover Analysis</option>
+                                </select>
+                            </div>
+
+                            <!-- Default Buffer Zone -->
+                            <div>
+                                <label for="bufferZone" class="block text-sm font-medium text-text-primary mb-2">
+                                    Default Buffer Zone Range
+                                </label>
+                                <div class="flex items-center space-x-4">
+                                    <input type="range" id="bufferZone" name="bufferZone" min="500" max="2000" value="1000" class="flex-1 h-2 bg-primary-200 rounded-lg appearance-none cursor-pointer slider" oninput="updateBufferValue(this.value)" />
+                                    <span id="bufferValue" class="text-sm font-medium text-text-primary bg-primary-50 px-3 py-1 rounded-md">1000m</span>
+                                </div>
+                            </div>
+
+                            <!-- Chart Display Options -->
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-3">
+                                    Preferred Chart Types
+                                </label>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                                        <span class="ml-3 text-sm text-text-primary">Bar Charts for Land Cover Distribution</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                                        <span class="ml-3 text-sm text-text-primary">Line Charts for Temporal Analysis</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                                        <span class="ml-3 text-sm text-text-primary">Pie Charts for Area Ratios</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Map & Display Preferences -->
+                        <div class="space-y-6">
+                            <h3 class="text-lg font-medium text-text-primary flex items-center">
+                                <i class="fas fa-map text-primary mr-3"></i>
+                                Map & Display
+                            </h3>
+
+                            <!-- Default Map Layers -->
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-3">
+                                    Default Active Layers
+                                </label>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                                        <span class="ml-3 text-sm text-text-primary">Existing Green Spaces</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                                        <span class="ml-3 text-sm text-text-primary">Vegetation Index Overlay</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                                        <span class="ml-3 text-sm text-text-primary">Recommended Park Areas</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Dashboard Layout -->
+                            <div>
+                                <label for="dashboardLayout" class="block text-sm font-medium text-text-primary mb-2">
+                                    Dashboard Layout
+                                </label>
+                                <select id="dashboardLayout" name="dashboardLayout" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                                    <option value="grid" selected>Grid Layout</option>
+                                    <option value="list">List Layout</option>
+                                    <option value="compact">Compact View</option>
+                                </select>
+                            </div>
+
+                            <!-- Notification Preferences -->
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-3">
+                                    Notifications
+                                </label>
+                                <div class="space-y-3">
+                                    <label class="flex items-center justify-between">
+                                        <span class="text-sm text-text-primary">AI Recommendation Updates</span>
+                                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                            <input type="checkbox" name="aiNotifications" id="aiNotifications" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+                                            <label for="aiNotifications" class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer"></label>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-center justify-between">
+                                        <span class="text-sm text-text-primary">Data Processing Completion</span>
+                                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                            <input type="checkbox" name="processNotifications" id="processNotifications" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+                                            <label for="processNotifications" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save Preferences Button -->
+                    <div class="flex justify-end mt-8">
+                        <button type="button" onclick="savePreferences()" class="px-6 py-3 bg-primary text-white rounded-md hover:bg-primary-600 transition-smooth font-medium">
+                            <i class="fas fa-save mr-2"></i>
+                            Save Preferences
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Security Tab -->
+                <div id="securityContent" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Password Change -->
+                        <div class="space-y-6">
+                            <h3 class="text-lg font-medium text-text-primary flex items-center">
+                                <i class="fas fa-key text-primary mr-3"></i>
+                                Change Password
+                            </h3>
+
+                            <form id="passwordForm" class="space-y-4">
+                                <!-- Current Password -->
+                                <div>
+                                    <label for="currentPassword" class="block text-sm font-medium text-text-primary mb-2">
+                                        Current Password
+                                    </label>
+                                    <div class="relative">
+                                        <input type="password" id="currentPassword" name="currentPassword" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary pr-12" />
+                                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePasswordVisibility('currentPassword')">
+                                            <i class="fas fa-eye text-text-secondary hover:text-primary transition-smooth"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- New Password -->
+                                <div>
+                                    <label for="newPassword" class="block text-sm font-medium text-text-primary mb-2">
+                                        New Password
+                                    </label>
+                                    <div class="relative">
+                                        <input type="password" id="newPassword" name="newPassword" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary pr-12" oninput="checkPasswordStrength(this.value)" />
+                                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePasswordVisibility('newPassword')">
+                                            <i class="fas fa-eye text-text-secondary hover:text-primary transition-smooth"></i>
+                                        </button>
+                                    </div>
+                                    <!-- Password Strength Indicator -->
+                                    <div class="mt-2">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                                <div id="passwordStrength" class="h-2 rounded-full transition-all duration-300 bg-error" style="width: 0%"></div>
+                                            </div>
+                                            <span id="strengthText" class="text-xs text-text-secondary">Weak</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div>
+                                    <label for="confirmPassword" class="block text-sm font-medium text-text-primary mb-2">
+                                        Confirm New Password
+                                    </label>
+                                    <div class="relative">
+                                        <input type="password" id="confirmPassword" name="confirmPassword" class="w-full px-4 py-3 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary pr-12" />
+                                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePasswordVisibility('confirmPassword')">
+                                            <i class="fas fa-eye text-text-secondary hover:text-primary transition-smooth"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full px-4 py-3 bg-primary text-white rounded-md hover:bg-primary-600 transition-smooth font-medium">
+                                    <i class="fas fa-lock mr-2"></i>
+                                    Update Password
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Two-Factor Authentication & Sessions -->
+                        <div class="space-y-6">
+                            <!-- Two-Factor Authentication -->
+                            <div>
+                                <h3 class="text-lg font-medium text-text-primary flex items-center mb-4">
+                                    <i class="fas fa-mobile-alt text-primary mr-3"></i>
+                                    Two-Factor Authentication
+                                </h3>
+                                
+                                <div class="bg-warning-50 border border-warning-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm font-medium text-warning-800">Not Enabled</p>
+                                            <p class="text-xs text-warning-600 mt-1">Add an extra layer of security to your account</p>
+                                        </div>
+                                        <button class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-600 transition-smooth text-sm font-medium">
+                                            <i class="fas fa-plus mr-2"></i>
+                                            Enable 2FA
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Active Sessions -->
+                            <div>
+                                <h3 class="text-lg font-medium text-text-primary flex items-center mb-4">
+                                    <i class="fas fa-desktop text-primary mr-3"></i>
+                                    Active Sessions
+                                </h3>
+                                
+                                <div class="space-y-3">
+                                    <!-- Current Session -->
+                                    <div class="bg-success-50 border border-success-200 rounded-lg p-4">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fas fa-laptop text-success-600"></i>
+                                                <div>
+                                                    <p class="text-sm font-medium text-success-800">Current Session</p>
+                                                    <p class="text-xs text-success-600">Chrome on Windows • New York, NY</p>
+                                                    <p class="text-xs text-success-600">Last active: Now</p>
+                                                </div>
+                                            </div>
+                                            <span class="px-2 py-1 bg-success-100 text-success-700 text-xs rounded-full font-medium">Active</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Other Session -->
+                                    <div class="bg-surface border border-border rounded-lg p-4">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fas fa-mobile-alt text-text-secondary"></i>
+                                                <div>
+                                                    <p class="text-sm font-medium text-text-primary">Mobile Device</p>
+                                                    <p class="text-xs text-text-secondary">Safari on iOS • New York, NY</p>
+                                                    <p class="text-xs text-text-secondary">Last active: 2 hours ago</p>
+                                                </div>
+                                            </div>
+                                            <button class="px-3 py-1 text-error hover:bg-error-50 rounded-md transition-smooth text-sm">
+                                                <i class="fas fa-times mr-1"></i>
+                                                Revoke
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account Actions -->
+                            <div>
+                                <h3 class="text-lg font-medium text-text-primary flex items-center mb-4">
+                                    <i class="fas fa-exclamation-triangle text-warning mr-3"></i>
+                                    Account Actions
+                                </h3>
+                                
+                                <div class="space-y-3">
+                                    <button class="w-full px-4 py-3 border border-warning text-warning hover:bg-warning-50 rounded-md transition-smooth font-medium text-left">
+                                        <i class="fas fa-download mr-2"></i>
+                                        Download Account Data
+                                    </button>
+                                    <button class="w-full px-4 py-3 border border-error text-error hover:bg-error-50 rounded-md transition-smooth font-medium text-left">
+                                        <i class="fas fa-trash-alt mr-2"></i>
+                                        Delete Account
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border mt-12">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-4">
+                    <p class="text-sm text-text-secondary">© 2025 Urban Green Space Optimizer. All Rights Reserved.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        Privacy Policy
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-file-contract mr-1"></i>
+                        Terms of Service
+                    </a>
+                    <a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-question-circle mr-1"></i>
+                        Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Notification -->
+    <div id="successNotification" class="fixed top-4 right-4 bg-success text-white px-6 py-3 rounded-lg shadow-modal transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center space-x-2">
+            <i class="fas fa-check-circle"></i>
+            <span id="successMessage">Settings saved successfully!</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active', 'border-primary', 'text-primary');
+                button.classList.add('border-transparent', 'text-text-secondary');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Content').classList.remove('hidden');
+            
+            // Add active class to selected tab
+            const activeTab = document.getElementById(tabName + 'Tab');
+            activeTab.classList.add('active', 'border-primary', 'text-primary');
+            activeTab.classList.remove('border-transparent', 'text-text-secondary');
+        }
+
+        // User menu toggle
+        function toggleUserMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('userMenu');
+            const button = event.target.closest('button');
+            
+            if (!button || !button.onclick || button.onclick.toString().indexOf('toggleUserMenu') === -1) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Profile form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showSuccessNotification('Profile updated successfully!');
+        });
+
+        // Photo upload handling
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                showSuccessNotification('Profile photo updated!');
+            }
+        }
+
+        // Buffer zone slider update
+        function updateBufferValue(value) {
+            document.getElementById('bufferValue').textContent = value + 'm';
+        }
+
+        // Save preferences
+        function savePreferences() {
+            showSuccessNotification('Preferences saved successfully!');
+        }
+
+        // Password form submission
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            showSuccessNotification('Password updated successfully!');
+            this.reset();
+        });
+
+        // Password visibility toggle
+        function togglePasswordVisibility(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrength');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            let text = 'Weak';
+            let color = 'bg-error';
+            
+            if (password.length >= 8) strength += 25;
+            if (password.match(/[a-z]/)) strength += 25;
+            if (password.match(/[A-Z]/)) strength += 25;
+            if (password.match(/[0-9]/)) strength += 25;
+            if (password.match(/[^a-zA-Z0-9]/)) strength += 25;
+            
+            if (strength >= 75) {
+                text = 'Strong';
+                color = 'bg-success';
+            } else if (strength >= 50) {
+                text = 'Medium';
+                color = 'bg-warning';
+            }
+            
+            strengthBar.style.width = Math.min(strength, 100) + '%';
+            strengthBar.className = `h-2 rounded-full transition-all duration-300 ${color}`;
+            strengthText.textContent = text;
+        }
+
+        // Success notification
+        function showSuccessNotification(message) {
+            const notification = document.getElementById('successNotification');
+            const messageElement = document.getElementById('successMessage');
+            
+            messageElement.textContent = message;
+            notification.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if (this.checked) {
+                    label.classList.remove('bg-gray-300');
+                    label.classList.add('bg-primary');
+                } else {
+                    label.classList.remove('bg-primary');
+                    label.classList.add('bg-gray-300');
+                }
+            });
+        });
+
+        // Initialize toggle switches
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+                const label = checkbox.nextElementSibling;
+                if (checkbox.checked) {
+                    label.classList.add('bg-primary');
+                } else {
+                    label.classList.add('bg-gray-300');
+                }
+            });
+        });
+
+        // Mobile responsive tabs (convert to accordion on small screens)
+        function handleResponsiveTabs() {
+            const isMobile = window.innerWidth < 768;
+            const tabContainer = document.querySelector('nav[aria-label="Tabs"]');
+            
+            if (isMobile) {
+                tabContainer.classList.remove('flex', 'space-x-8');
+                tabContainer.classList.add('space-y-2');
+            } else {
+                tabContainer.classList.add('flex', 'space-x-8');
+                tabContainer.classList.remove('space-y-2');
+            }
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', handleResponsiveTabs);
+        document.addEventListener('DOMContentLoaded', handleResponsiveTabs);
+    </script>
+
+    <style>
+        /* Custom slider styles */
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Toggle switch styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: var(--color-primary);
+        }
+
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: var(--color-primary);
+        }
+
+        /* Tab button active state */
+        .tab-button.active {
+            border-color: var(--color-primary) !important;
+            color: var(--color-primary) !important;
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 767px) {
+            .tab-button {
+                width: 100%;
+                text-align: left;
+                border-bottom: 1px solid var(--color-border);
+                border-left: none !important;
+                border-right: none !important;
+                border-top: none !important;
+                padding: 1rem;
+                margin: 0;
+            }
+            
+            .tab-button.active {
+                background-color: var(--color-primary-50);
+                border-left: 4px solid var(--color-primary) !important;
+            }
+        }
+    </style>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

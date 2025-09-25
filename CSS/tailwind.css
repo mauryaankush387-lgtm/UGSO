@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #2D5A27; /* deep forest green */
+  --color-primary-50: #F0F9F0; /* very light green */
+  --color-primary-100: #D4F1D4; /* light green */
+  --color-primary-200: #A8E6A8; /* medium light green */
+  --color-primary-300: #7DD87D; /* medium green */
+  --color-primary-400: #52C952; /* medium dark green */
+  --color-primary-500: #2D5A27; /* deep forest green */
+  --color-primary-600: #245020; /* darker forest green */
+  --color-primary-700: #1B3C18; /* very dark green */
+  --color-primary-800: #122810; /* extremely dark green */
+  --color-primary-900: #091408; /* near black green */
+
+  /* Secondary Colors */
+  --color-secondary: #4A7C59; /* balanced sage green */
+  --color-secondary-50: #F2F7F4; /* very light sage */
+  --color-secondary-100: #E0EDE4; /* light sage */
+  --color-secondary-200: #C1DBC9; /* medium light sage */
+  --color-secondary-300: #A2C9AE; /* medium sage */
+  --color-secondary-400: #83B793; /* medium dark sage */
+  --color-secondary-500: #4A7C59; /* balanced sage green */
+  --color-secondary-600: #3E6847; /* darker sage */
+  --color-secondary-700: #325435; /* very dark sage */
+  --color-secondary-800: #264023; /* extremely dark sage */
+  --color-secondary-900: #1A2C11; /* near black sage */
+
+  /* Accent Colors */
+  --color-accent: #8FBC8F; /* lighter green */
+  --color-accent-50: #F7FBF7; /* very light accent */
+  --color-accent-100: #EBF5EB; /* light accent */
+  --color-accent-200: #D7EBD7; /* medium light accent */
+  --color-accent-300: #C3E1C3; /* medium accent */
+  --color-accent-400: #AFCEAF; /* medium dark accent */
+  --color-accent-500: #8FBC8F; /* lighter green */
+  --color-accent-600: #769C76; /* darker accent */
+  --color-accent-700: #5D7C5D; /* very dark accent */
+  --color-accent-800: #445C44; /* extremely dark accent */
+  --color-accent-900: #2B3C2B; /* near black accent */
+
+  /* Background Colors */
+  --color-background: #FAFBFA; /* warm white */
+  --color-surface: #FFFFFF; /* pure white */
+
+  /* Text Colors */
+  --color-text-primary: #1A1A1A; /* near-black */
+  --color-text-secondary: #6B7280; /* medium gray */
+
+  /* Status Colors */
+  --color-success: #059669; /* vibrant green */
+  --color-success-50: #ECFDF5; /* very light success */
+  --color-success-100: #D1FAE5; /* light success */
+  --color-success-200: #A7F3D0; /* medium light success */
+  --color-success-300: #6EE7B7; /* medium success */
+  --color-success-400: #34D399; /* medium dark success */
+  --color-success-500: #059669; /* vibrant green */
+  --color-success-600: #047857; /* darker success */
+  --color-success-700: #065F46; /* very dark success */
+  --color-success-800: #064E3B; /* extremely dark success */
+  --color-success-900: #022C22; /* near black success */
+
+  --color-warning: #D97706; /* earth-tone orange */
+  --color-warning-50: #FFFBEB; /* very light warning */
+  --color-warning-100: #FEF3C7; /* light warning */
+  --color-warning-200: #FDE68A; /* medium light warning */
+  --color-warning-300: #FCD34D; /* medium warning */
+  --color-warning-400: #FBBF24; /* medium dark warning */
+  --color-warning-500: #D97706; /* earth-tone orange */
+  --color-warning-600: #B45309; /* darker warning */
+  --color-warning-700: #92400E; /* very dark warning */
+  --color-warning-800: #78350F; /* extremely dark warning */
+  --color-warning-900: #451A03; /* near black warning */
+
+  --color-error: #DC2626; /* clear red */
+  --color-error-50: #FEF2F2; /* very light error */
+  --color-error-100: #FEE2E2; /* light error */
+  --color-error-200: #FECACA; /* medium light error */
+  --color-error-300: #FCA5A5; /* medium error */
+  --color-error-400: #F87171; /* medium dark error */
+  --color-error-500: #DC2626; /* clear red */
+  --color-error-600: #B91C1C; /* darker error */
+  --color-error-700: #991B1B; /* very dark error */
+  --color-error-800: #7F1D1D; /* extremely dark error */
+  --color-error-900: #450A0A; /* near black error */
+
+  /* Border Colors */
+  --color-border: #E5E7EB; /* light gray border */
+  --color-border-light: #F3F4F6; /* very light border */
+  --color-border-dark: #D1D5DB; /* medium border */
+
+  /* Shadow Colors */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-tooltip: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-elevation: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Base styles */
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  .font-caption {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .font-data {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Component styles */
+@layer components {
+  .card {
+    background-color: var(--color-surface);
+    border-radius: 6px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .modal {
+    background-color: var(--color-surface);
+    border-radius: 6px;
+    box-shadow: var(--shadow-modal);
+  }
+
+  .tooltip {
+    background-color: var(--color-surface);
+    border-radius: 6px;
+    box-shadow: var(--shadow-tooltip);
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 6px;
+    transition: all 150ms ease-out;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-primary-600);
+  }
+
+  .btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+    border-radius: 6px;
+    transition: all 150ms ease-out;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-secondary-600);
+  }
+
+  .transition-smooth {
+    transition: all 150ms ease-out;
+  }
+
+  .transition-panel {
+    transition: all 300ms ease-out;
+  }
+
+  .transition-tooltip {
+    transition: all 200ms ease-out;
+  }
+}
+
+/* Utility styles */
+@layer utilities {
+  .text-primary {
+    color: var(--color-text-primary);
+  }
+
+  .text-secondary {
+    color: var(--color-text-secondary);
+  }
+
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+
+  .bg-background {
+    background-color: var(--color-background);
+  }
+
+  .border-default {
+    border: 1px solid var(--color-border);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-modal {
+    box-shadow: var(--shadow-modal);
+  }
+
+  .shadow-tooltip {
+    box-shadow: var(--shadow-tooltip);
+  }
+
+  .shadow-elevation {
+    box-shadow: var(--shadow-elevation);
+  }
+}

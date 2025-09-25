@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Environmental Dashboard - Urban Green Space Optimizer</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Furbangree9896back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Section -->
+    <header class="bg-surface shadow-card border-b border-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <path d="M12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16Z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-primary">Urban Green Space Optimizer</h1>
+                        <p class="text-sm text-text-secondary">Environmental Planning Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="environmental_dashboard.html" class="text-primary font-medium border-b-2 border-primary pb-1">Dashboard</a>
+                    <a href="data_upload_manager.html" class="text-text-secondary hover:text-primary transition-smooth">Data Upload</a>
+                    <a href="analysis_results.html" class="text-text-secondary hover:text-primary transition-smooth">Analysis</a>
+                    <a href="user_profile_settings.html" class="text-text-secondary hover:text-primary transition-smooth">Profile</a>
+                </nav>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-text-secondary hover:text-primary transition-smooth">
+                        <i class="fas fa-bell text-lg"></i>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User Avatar" class="h-8 w-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <span class="text-sm font-medium text-text-primary">Sarah Chen</span>
+                    </div>
+                    <button onclick="logout()" class="p-2 text-text-secondary hover:text-error transition-smooth">
+                        <i class="fas fa-sign-out-alt text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-text-secondary hover:text-primary transition-smooth" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="md:hidden hidden border-t border-border py-4">
+                <nav class="flex flex-col space-y-2">
+                    <a href="environmental_dashboard.html" class="text-primary font-medium px-2 py-1">Dashboard</a>
+                    <a href="data_upload_manager.html" class="text-text-secondary hover:text-primary transition-smooth px-2 py-1">Data Upload</a>
+                    <a href="analysis_results.html" class="text-text-secondary hover:text-primary transition-smooth px-2 py-1">Analysis</a>
+                    <a href="user_profile_settings.html" class="text-text-secondary hover:text-primary transition-smooth px-2 py-1">Profile</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-1 p-4 lg:p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <h2 class="text-2xl font-semibold text-text-primary">Environmental Dashboard</h2>
+                        <p class="text-text-secondary mt-1">Analyze green spaces and optimize urban planning decisions</p>
+                    </div>
+                    <div class="mt-4 sm:mt-0 flex items-center space-x-3">
+                        <div class="flex items-center space-x-2 bg-success-50 px-3 py-1 rounded-full">
+                            <div class="w-2 h-2 bg-success rounded-full"></div>
+                            <span class="text-sm font-medium text-success-700">Data Updated</span>
+                        </div>
+                        <span class="text-sm text-text-secondary">Last sync: 2 min ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid Layout -->
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 h-[calc(100vh-200px)]">
+                <!-- Map Section (Left - Takes 3 columns on xl screens) -->
+                <div class="xl:col-span-3 bg-surface rounded-lg shadow-card border border-border overflow-hidden">
+                    <!-- Map Header -->
+                    <div class="p-4 border-b border-border bg-primary-50">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-map text-primary text-lg"></i>
+                                <h3 class="text-lg font-semibold text-text-primary">Interactive Green Space Map</h3>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <!-- Layer Toggle Buttons -->
+                                <button id="greenSpacesToggle" class="px-3 py-1 text-xs font-medium bg-primary text-white rounded-full transition-smooth">
+                                    <i class="fas fa-tree mr-1"></i>Green Spaces
+                                </button>
+                                <button id="vegetationToggle" class="px-3 py-1 text-xs font-medium bg-gray-200 text-text-secondary rounded-full hover:bg-primary hover:text-white transition-smooth">
+                                    <i class="fas fa-leaf mr-1"></i>Vegetation Index
+                                </button>
+                                <button id="recommendationsToggle" class="px-3 py-1 text-xs font-medium bg-gray-200 text-text-secondary rounded-full hover:bg-primary hover:text-white transition-smooth">
+                                    <i class="fas fa-lightbulb mr-1"></i>Recommendations
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Container -->
+                    <div id="map" class="h-full min-h-[400px] relative">
+                        <!-- Map Loading State -->
+                        <div id="mapLoading" class="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
+                            <div class="text-center">
+                                <i class="fas fa-spinner fa-spin text-primary text-2xl mb-2"></i>
+                                <p class="text-text-secondary">Loading map data...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Controls -->
+                    <div class="absolute bottom-4 left-4 z-20 flex flex-col space-y-2">
+                        <button class="bg-surface shadow-card border border-border p-2 rounded-md hover:bg-gray-50 transition-smooth">
+                            <i class="fas fa-plus text-text-secondary"></i>
+                        </button>
+                        <button class="bg-surface shadow-card border border-border p-2 rounded-md hover:bg-gray-50 transition-smooth">
+                            <i class="fas fa-minus text-text-secondary"></i>
+                        </button>
+                        <button class="bg-surface shadow-card border border-border p-2 rounded-md hover:bg-gray-50 transition-smooth">
+                            <i class="fas fa-crosshairs text-text-secondary"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sidebar Controls (Right - Takes 1 column on xl screens) -->
+                <div class="xl:col-span-1 space-y-6">
+                    <!-- Analysis Controls -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border">
+                        <div class="p-4 border-b border-border">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-sliders-h text-primary"></i>
+                                <h3 class="text-lg font-semibold text-text-primary">Analysis Controls</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 space-y-4">
+                            <!-- Analysis Type Dropdown -->
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-2">Analysis Type</label>
+                                <select id="analysisType" class="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-smooth bg-surface text-text-primary">
+                                    <option value="ndvi">NDVI (Vegetation Health)</option>
+                                    <option value="ndwi">NDWI (Water Content)</option>
+                                    <option value="dem">DEM (Elevation)</option>
+                                    <option value="landcover">Land Cover Classification</option>
+                                </select>
+                            </div>
+
+                            <!-- Buffer Zone Slider -->
+                            <div>
+                                <label class="block text-sm font-medium text-text-primary mb-2">
+                                    Buffer Zone: <span id="bufferValue" class="font-data text-primary">1000m</span>
+                                </label>
+                                <input type="range" id="bufferSlider" min="500" max="2000" value="1000" step="100" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider" />
+                                <div class="flex justify-between text-xs text-text-secondary mt-1">
+                                    <span>500m</span>
+                                    <span>2km</span>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex space-x-2">
+                                <button id="applyAnalysis" class="flex-1 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-smooth font-medium">
+                                    <i class="fas fa-play mr-2"></i>Apply
+                                </button>
+                                <button id="resetAnalysis" class="flex-1 bg-gray-200 text-text-secondary px-4 py-2 rounded-md hover:bg-gray-300 transition-smooth font-medium">
+                                    <i class="fas fa-undo mr-2"></i>Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Upload -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border">
+                        <div class="p-4 border-b border-border">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-upload text-primary"></i>
+                                <h3 class="text-lg font-semibold text-text-primary">Data Upload</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <div id="dropZone" class="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary hover:bg-primary-50 transition-smooth cursor-pointer">
+                                <i class="fas fa-cloud-upload-alt text-3xl text-text-secondary mb-2"></i>
+                                <p class="text-sm text-text-primary font-medium">Drop files here or click to browse</p>
+                                <p class="text-xs text-text-secondary mt-1">Supports GeoJSON, Shapefile, Raster</p>
+                                <input type="file" id="fileInput" class="hidden" multiple accept=".geojson,.shp,.tif,.tiff" />
+                            </div>
+                            
+                            <!-- Upload Progress -->
+                            <div id="uploadProgress" class="hidden mt-4">
+                                <div class="flex items-center justify-between text-sm mb-1">
+                                    <span class="text-text-primary">Uploading...</span>
+                                    <span class="text-text-secondary">75%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full transition-smooth" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendations -->
+                    <div class="bg-surface rounded-lg shadow-card border border-border">
+                        <div class="p-4 border-b border-border">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-robot text-primary"></i>
+                                <h3 class="text-lg font-semibold text-text-primary">AI Recommendations</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 space-y-3">
+                            <div class="flex items-start space-x-3 p-3 bg-success-50 rounded-lg border border-success-200">
+                                <i class="fas fa-seedling text-success mt-1"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-success-700">High Priority Area</p>
+                                    <p class="text-xs text-success-600 mt-1">Consider adding green space in downtown district - low vegetation coverage detected.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-3 p-3 bg-warning-50 rounded-lg border border-warning-200">
+                                <i class="fas fa-exclamation-triangle text-warning mt-1"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-warning-700">Maintenance Alert</p>
+                                    <p class="text-xs text-warning-600 mt-1">Central Park shows declining NDVI values - irrigation system check recommended.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-3 p-3 bg-primary-50 rounded-lg border border-primary-200">
+                                <i class="fas fa-lightbulb text-primary mt-1"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-primary-700">Optimization Tip</p>
+                                    <p class="text-xs text-primary-600 mt-1">Connect existing green corridors to improve urban biodiversity flow.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Dashboard Section -->
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Land Cover Distribution Chart -->
+                <div class="bg-surface rounded-lg shadow-card border border-border">
+                    <div class="p-4 border-b border-border">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-chart-bar text-primary"></i>
+                            <h3 class="text-lg font-semibold text-text-primary">Land Cover Distribution</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <canvas id="landCoverChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+
+                <!-- Temporal Analysis Chart -->
+                <div class="bg-surface rounded-lg shadow-card border border-border">
+                    <div class="p-4 border-b border-border">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-chart-line text-primary"></i>
+                            <h3 class="text-lg font-semibold text-text-primary">Vegetation Trends</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <canvas id="temporalChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+
+                <!-- Green vs Non-Green Ratio -->
+                <div class="bg-surface rounded-lg shadow-card border border-border">
+                    <div class="p-4 border-b border-border">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-chart-pie text-primary"></i>
+                            <h3 class="text-lg font-semibold text-text-primary">Green Space Ratio</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <canvas id="ratioChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        let map;
+        let greenSpacesLayer;
+        let vegetationLayer;
+        let recommendationsLayer;
+        let charts = {};
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMap();
+            initializeCharts();
+            initializeControls();
+            initializeFileUpload();
+        });
+
+        // Map initialization
+        function initializeMap() {
+            // Initialize Leaflet map
+            map = L.map('map').setView([40.7128, -74.0060], 12); // New York City coordinates
+
+            // Add base tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Hide loading state
+            setTimeout(() => {
+                document.getElementById('mapLoading').style.display = 'none';
+            }, 1500);
+
+            // Initialize layers
+            initializeMapLayers();
+        }
+
+        // Initialize map layers
+        function initializeMapLayers() {
+            // Green Spaces Layer (sample data)
+            greenSpacesLayer = L.layerGroup([
+                L.circle([40.7829, -73.9654], { // Central Park
+                    color: '#2D5A27',
+                    fillColor: '#52C952',
+                    fillOpacity: 0.6,
+                    radius: 800
+                }).bindPopup('<b>Central Park</b><br>Area: 341 hectares<br>NDVI: 0.75'),
+                
+                L.circle([40.6892, -74.0445], { // Battery Park
+                    color: '#2D5A27',
+                    fillColor: '#52C952',
+                    fillOpacity: 0.6,
+                    radius: 300
+                }).bindPopup('<b>Battery Park</b><br>Area: 10 hectares<br>NDVI: 0.68'),
+                
+                L.circle([40.7505, -73.9934], { // Bryant Park
+                    color: '#2D5A27',
+                    fillColor: '#52C952',
+                    fillOpacity: 0.6,
+                    radius: 200
+                }).bindPopup('<b>Bryant Park</b><br>Area: 4 hectares<br>NDVI: 0.72')
+            ]).addTo(map);
+
+            // Vegetation Index Layer
+            vegetationLayer = L.layerGroup([
+                L.rectangle([[40.7589, -73.9851], [40.7689, -73.9751]], {
+                    color: '#7DD87D',
+                    fillColor: '#A8E6A8',
+                    fillOpacity: 0.4
+                }).bindPopup('High Vegetation Density<br>NDVI: 0.8-0.9'),
+                
+                L.rectangle([[40.7289, -73.9951], [40.7389, -73.9851]], {
+                    color: '#D97706',
+                    fillColor: '#FCD34D',
+                    fillOpacity: 0.4
+                }).bindPopup('Medium Vegetation Density<br>NDVI: 0.4-0.6')
+            ]);
+
+            // Recommendations Layer
+            recommendationsLayer = L.layerGroup([
+                L.marker([40.7589, -74.0059], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: '<div class="bg-warning text-white rounded-full w-8 h-8 flex items-center justify-center"><i class="fas fa-plus text-sm"></i></div>',
+                        iconSize: [32, 32]
+                    })
+                }).bindPopup('<b>Recommended Green Space</b><br>Priority: High<br>Estimated Impact: +15% green coverage'),
+                
+                L.marker([40.7189, -73.9959], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: '<div class="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center"><i class="fas fa-seedling text-sm"></i></div>',
+                        iconSize: [32, 32]
+                    })
+                }).bindPopup('<b>Tree Planting Zone</b><br>Priority: Medium<br>Estimated Impact: +8% green coverage')
+            ]);
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Land Cover Distribution Chart
+            const landCoverCtx = document.getElementById('landCoverChart').getContext('2d');
+            charts.landCover = new Chart(landCoverCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Green Space', 'Built Area', 'Water', 'Bare Soil', 'Roads'],
+                    datasets: [{
+                        label: 'Coverage (%)',
+                        data: [35, 45, 8, 7, 5],
+                        backgroundColor: [
+                            '#52C952',
+                            '#6B7280',
+                            '#3B82F6',
+                            '#D97706',
+                            '#374151'
+                        ],
+                        borderColor: [
+                            '#2D5A27',
+                            '#4B5563',
+                            '#1E40AF',
+                            '#B45309',
+                            '#1F2937'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 50
+                        }
+                    }
+                }
+            });
+
+            // Temporal Analysis Chart
+            const temporalCtx = document.getElementById('temporalChart').getContext('2d');
+            charts.temporal = new Chart(temporalCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'NDVI Average',
+                        data: [0.3, 0.35, 0.45, 0.65, 0.75, 0.8, 0.85, 0.82, 0.7, 0.55, 0.4, 0.32],
+                        borderColor: '#2D5A27',
+                        backgroundColor: 'rgba(45, 90, 39, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1
+                        }
+                    }
+                }
+            });
+
+            // Green Space Ratio Chart
+            const ratioCtx = document.getElementById('ratioChart').getContext('2d');
+            charts.ratio = new Chart(ratioCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Green Spaces', 'Non-Green Areas'],
+                    datasets: [{
+                        data: [35, 65],
+                        backgroundColor: ['#52C952', '#E5E7EB'],
+                        borderColor: ['#2D5A27', '#D1D5DB'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize controls
+        function initializeControls() {
+            // Layer toggle buttons
+            document.getElementById('greenSpacesToggle').addEventListener('click', function() {
+                toggleLayer(greenSpacesLayer, this);
+            });
+
+            document.getElementById('vegetationToggle').addEventListener('click', function() {
+                toggleLayer(vegetationLayer, this);
+            });
+
+            document.getElementById('recommendationsToggle').addEventListener('click', function() {
+                toggleLayer(recommendationsLayer, this);
+            });
+
+            // Buffer zone slider
+            const bufferSlider = document.getElementById('bufferSlider');
+            const bufferValue = document.getElementById('bufferValue');
+            
+            bufferSlider.addEventListener('input', function() {
+                bufferValue.textContent = this.value + 'm';
+            });
+
+            // Analysis buttons
+            document.getElementById('applyAnalysis').addEventListener('click', function() {
+                applyAnalysis();
+            });
+
+            document.getElementById('resetAnalysis').addEventListener('click', function() {
+                resetAnalysis();
+            });
+        }
+
+        // Toggle map layers
+        function toggleLayer(layer, button) {
+            if (map.hasLayer(layer)) {
+                map.removeLayer(layer);
+                button.classList.remove('bg-primary', 'text-white');
+                button.classList.add('bg-gray-200', 'text-text-secondary');
+            } else {
+                map.addLayer(layer);
+                button.classList.remove('bg-gray-200', 'text-text-secondary');
+                button.classList.add('bg-primary', 'text-white');
+            }
+        }
+
+        // Apply analysis
+        function applyAnalysis() {
+            const analysisType = document.getElementById('analysisType').value;
+            const bufferZone = document.getElementById('bufferSlider').value;
+            
+            // Show loading state
+            const button = document.getElementById('applyAnalysis');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...';
+            button.disabled = true;
+            
+            // Simulate analysis
+            setTimeout(() => {
+                // Update charts with new data (simulated)
+                updateChartsWithAnalysis(analysisType);
+                
+                // Reset button
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Show success message
+                showNotification('Analysis completed successfully!', 'success');
+            }, 2000);
+        }
+
+        // Reset analysis
+        function resetAnalysis() {
+            document.getElementById('analysisType').value = 'ndvi';
+            document.getElementById('bufferSlider').value = 1000;
+            document.getElementById('bufferValue').textContent = '1000m';
+            
+            // Reset charts to original data
+            initializeCharts();
+            
+            showNotification('Analysis reset to default values', 'info');
+        }
+
+        // Update charts with analysis results
+        function updateChartsWithAnalysis(analysisType) {
+            // Simulate different data based on analysis type
+            let newData;
+            switch(analysisType) {
+                case 'ndvi':
+                    newData = [35, 45, 8, 7, 5];
+                    break;
+                case 'ndwi':
+                    newData = [30, 40, 15, 10, 5];
+                    break;
+                case 'dem':
+                    newData = [25, 50, 10, 10, 5];
+                    break;
+                case 'landcover':
+                    newData = [40, 40, 8, 7, 5];
+                    break;
+            }
+            
+            charts.landCover.data.datasets[0].data = newData;
+            charts.landCover.update();
+        }
+
+        // File upload functionality
+        function initializeFileUpload() {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            
+            dropZone.addEventListener('click', () => fileInput.click());
+            
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-primary', 'bg-primary-50');
+            });
+            
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('border-primary', 'bg-primary-50');
+            });
+            
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-primary', 'bg-primary-50');
+                handleFiles(e.dataTransfer.files);
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+        }
+
+        // Handle file uploads
+        function handleFiles(files) {
+            if (files.length > 0) {
+                document.getElementById('uploadProgress').classList.remove('hidden');
+                
+                // Simulate upload progress
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 10;
+                    document.querySelector('#uploadProgress .bg-primary').style.width = progress + '%';
+                    document.querySelector('#uploadProgress span:last-child').textContent = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            document.getElementById('uploadProgress').classList.add('hidden');
+                            showNotification('Files uploaded successfully!', 'success');
+                        }, 500);
+                    }
+                }, 200);
+            }
+        }
+
+        // Utility functions
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-modal border max-w-sm transition-smooth ${
+                type === 'success' ? 'bg-success-50 border-success-200 text-success-700' :
+                type === 'error' ? 'bg-error-50 border-error-200 text-error-700' :
+                'bg-primary-50 border-primary-200 text-primary-700'
+            }`;
+            
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                    <span class="font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-auto">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Custom slider styling
+        const style = document.createElement('style');
+        style.textContent = `
+            .slider::-webkit-slider-thumb {
+                appearance: none;
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                background: #2D5A27;
+                cursor: pointer;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            
+            .slider::-moz-range-thumb {
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                background: #2D5A27;
+                cursor: pointer;
+                border: none;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            
+            .custom-marker {
+                background: transparent !important;
+                border: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
